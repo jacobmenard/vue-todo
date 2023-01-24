@@ -47,15 +47,23 @@ export const mutations = {
     },
 
     REMOVE_TODO(state) {
-        for (var i = 0; i <= state.todo.length - 1; i++) {
+
+        var deleted = []
+        for (let i = 0; i < state.todo.length; i++) {
             if (state.todo[i].selected) {
-                state.todo.splice(i, 1)
-                // console.log(i)
-            }
+                deleted.push(i)
+                state.todo[i].selected = false
+
+            } 
         }
 
-        for (var i = 0; i <= state.todo.length - 1; i++) {
-            console.log(state.todo)
-        }
+        console.log(deleted)
+        var actual = 0
+        deleted.forEach((item) => {
+            state.todo.splice(item-actual, 1)
+            actual+=1
+            console.log(item)
+        })
+
     }
 }

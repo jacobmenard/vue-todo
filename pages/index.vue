@@ -10,19 +10,21 @@
     <div class="list-display my-3">
       <v-list>
         
-        <v-checkbox v-for="(item, i) in todo" :key="`checkbox${i}`" :label="`${item.title}`" :value="item.selected" :checked="item.selected" class="mt-1" :class="{'checked' : item.selected}" hide-details="false" @change="getChecked(item, i)"></v-checkbox>
+        <v-checkbox v-for="(item, i) in todo" :key="`checkbox${i}`" :label="`${item.title}`" :value="item.selected" class="mt-1" :class="{'checked' : item.selected}" hide-details="false" @change="getChecked(item, i)"></v-checkbox>
       </v-list>
     </div>
 
-    <div class="d-flex">
-      <v-text-field
-        label="Input items"
-        solo
-        class="mr-2"
-        v-model="todoTitle"
-      ></v-text-field>
-      <v-btn elevation="2" color="primary" rounded @click="getStoredTodo()">Add Item</v-btn>
-    </div>
+    <form @submit.prevent="getStoredTodo()">
+      <div class="d-flex">
+        <v-text-field
+          label="Input items"
+          solo
+          class="mr-2"
+          v-model="todoTitle"
+        ></v-text-field>
+        <v-btn type="submit" elevation="2" color="primary" rounded>Add Item</v-btn>
+      </div>
+    </form>
   </v-card>
 </template>
 
@@ -60,6 +62,7 @@ export default {
 
     getStoredTodo() {
       this.storeTodo({title: this.todoTitle, status: 'pending', selected: false})
+      this.todoTitle = ''
     },
 
     getChecked(data, idx) {
